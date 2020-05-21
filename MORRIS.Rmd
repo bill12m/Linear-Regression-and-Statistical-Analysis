@@ -1,0 +1,57 @@
+---
+title: "MORRIS"
+author: "William Morris"
+date: "4/16/2019"
+output: pdf_document
+---
+#1.#
+```{r}
+cat("\014")
+adv<-read.csv("Advertising.csv")
+plotModel<-lm(Sales~TV,data=adv)
+plotLM<-summary(plotModel)
+print(plotLM)
+plot(adv$TV,adv$Sales,pch=20,col="blue",xlab="TV Overhead",ylab="Sales",main="Sales vs TV")
+abline(plotModel,col="red")
+```
+
+#2.#
+```{r}
+cat("\014")
+data1<-read.csv("MyData1.csv")
+model<-lm(Var3~Var1+Var2,data=data1)
+LM<-summary(model)
+print(LM)
+#############################################
+cat("The Residual Standard Error is: ",LM$sigma, "\n")
+cat("The coefficient of determination is: ",LM$r.squared,"\n")
+cat("The observed standard errors are: ",LM$coefficients[,"Std. Error"],"\n")
+#############################################
+CI<-confint(model,level=.95)
+print(model)
+print(CI)
+#############################################
+newInput<-data.frame(Var1=12.55,Var2=20.32)
+alpha=.05
+ciMean<-predict(model,newdata=newInput,interval="confidence",level=1-alpha)
+ciPred<-predict(model,newdata=newInput,interval="prediction",level=1-alpha)
+print(ciMean)
+print(ciPred)
+```
+
+#3.#
+```{r}
+cat("\014")
+houseData<-read.csv("kc_house_data.csv")
+houseData$id<-NULL
+houseData$date<-NULL
+houseData$sqft_basement<-NULL
+houseData$floors<-NULL
+model<-lm(data=houseData)
+LM<-summary(model)
+print(LM)
+```
+
+So, the "id" and "date" data were clearly insignificant as they are index data only. "sqft_basement" kept coming up in the summary as a non-numeric argument. I was not able to locate the datum that caused this, so I removed it. "floors" was the only qualitative data that I removed because of its insignificance.
+
+I was happy to leave "sqft_lot" in the model, as it's still 99% significant, even if that's substantially less that many of the other data.

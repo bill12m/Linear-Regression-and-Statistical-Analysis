@@ -1,0 +1,9 @@
+cat("\014")
+houseData<-read.csv("kc_house_data.csv")
+houseData$id<-NULL
+houseData$date<-NULL
+houseData$sqft_basement<-NULL
+houseData$floors<-NULL
+model<-lm(data=houseData)
+LM<-summary(model)
+print(LM)

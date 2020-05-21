@@ -1,0 +1,7 @@
+cat("\014")
+adv<-read.csv("Advertising.csv")
+plotModel<-lm(Sales~TV,data=adv)
+plotLM<-summary(plotModel)
+print(plotLM)
+plot(adv$TV,adv$Sales,pch=20,col="blue",xlab="TV Overhead",ylab="Sales",main="Sales vs TV")
+abline(plotModel,col="red")
